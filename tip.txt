@@ -1,0 +1,77 @@
+yolov5 
+
+학습코드 python train.py --img 416 --batch ? --epochs ? --data 데이터 경로 --cfg 사용할 모델경로 --weights 가중치 경로 --name 저장할 위치
+
+
+실행코드 python .\detect.py --weights 가중치 경로 --img 416 --conf 0.5 --source 0
+
+pytorch 버전
+
+conda install pytorch==1.10.1 torchvision==0.11.2 torchaudio==0.10.1 cudatoolkit=10.2 -c pytorch
+
+
+--------------
+
+# 라이브러리 호출
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torch.optim as optim
+from torch.utils.data import Dataset, DataLoader
+
+import torchvision 
+import torchvision.datasets
+import torchvision.transforms as transforms
+import numpy as np
+import matplotlib.pyplot as plt
+plt.style.use('seaborn-white')
+
+
+# 전처리 설정
+transform = transforms.Compose([transforms.ToTensor(),
+                                transforms.Normalize((0.5,), (0.5,))])
+
+
+
+
+
+# 데이터 로드
+trainset = torchvision.datasets.MNIST(root = './data',
+                                      train = True,
+                                      download = True,
+                                      transform = transform)
+
+testset = torchvision.datasets.MNIST(root = './data',
+                                     train = False,
+                                     download = True,
+                                     transform = transform)
+
+#yolov5 객체 카운터 부분
+#실행코드
+
+python ./project/yolov5/project.py --weight C:\Users\ESL\anaconda3\envs\yolov5_custom\project\yolov5\runs\train\person_result\weights\best.pt --img 416 --conf 0.5 --source 0
+#general.py에 추가
+def plot_counter(img, label1, org):
+    font= cv2.FONT_HERSHEY_SIMPLEX
+    fontScale = 1
+    color = (0,255,0)
+    thickness = 2
+    cv2.putText(img, label1, org, font, fontScale, color, thickness, cv2.LINE_AA)
+# detect.py 에Print results 수정
+org = (50, 50)
+                for c in det[:,-1].unique():
+                    m=(det[:,-1]==c).sum()
+                    total_det_per_class = '%g %ss,'%(n,names[int(c)])
+                    s += total_det_per_class + '< '
+
+                    plot_counter(im0, total_det_per_class, org)
+                    org = org[0],org[0]+30
+# detect.py 
+import sys
+sys.path.append(r'C:/Users/ESL/anaconda3/envs/yolov5_custom/project/yolov5/utils')
+from general import plot_counter
+
+#detect.py 아래부분
+if len(det)==10:
+                cap.release()
+                print('인구 과집중')
